@@ -1,0 +1,12 @@
+{
+  "name": "fb-messeger-with-api.ai",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:benweizhu/fb-messeger-with-api.ai.git",
+  "author": "benweizhu <benweizhu@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3"
+  }
+}
