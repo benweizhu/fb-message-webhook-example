@@ -6,9 +6,11 @@
   "author": "benweizhu <benweizhu@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "apiai": "^4.0.3",
     "body-parser": "^1.18.2",
     "express": "^4.16.3",
-    "request": "^2.85.0"
+    "request": "^2.85.0",
+    "uuid": "^3.2.1"
   },
   "scripts": {
     "start": "node index.js"

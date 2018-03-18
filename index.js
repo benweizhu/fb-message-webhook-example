@@ -1,26 +1,35 @@
 const express = require("express"),
   bodyParser = require("body-parser"),
   app = express().use(bodyParser.json());
-  
+const uuidv1 = require('uuid/v1');
 const request = require('request');
+
+const apiai = require('apiai');
+
+const apiaiApp = apiai(process.env.APIAI_ACCESS_TOKEN);
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
 // Handles messages events
 function handleMessage(sender_psid, received_message) {
-  let response;
-
   // Check if the message contains text
   if (received_message.text) {
 
-    // Create the payload for a basic text message
-    response = {
-      "text": `You sent the message: "${received_message.text}". Now send me an image!`
-    }
+    var request = apiaiApp.textRequest(received_message.text, {
+      sessionId: uuidv1()
+    });
+
+    request.on('response', function (response) {
+      callSendAPI(sender_psid, response);
+    });
+
+    request.on('error', function (error) {
+      console.log(error);
+    });
+
+    request.end();
   }
 
-  // Sends the response message
-  callSendAPI(sender_psid, response);
 }
 
 // Handles messaging_postbacks events
