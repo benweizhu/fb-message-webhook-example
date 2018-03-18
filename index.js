@@ -20,7 +20,7 @@ function handleMessage(sender_psid, received_message) {
     });
 
     request.on('response', function (response) {
-      console.log('response', response);
+      console.log('response', response.result.fulfillment.speech);
       callSendAPI(sender_psid, response.result.fulfillment.speech);
     });
 
