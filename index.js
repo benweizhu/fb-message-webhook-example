@@ -1,10 +1,10 @@
 const express = require("express"),
   bodyParser = require("body-parser"),
   app = express().use(bodyParser.json());
-const uuidv1 = require('uuid/v1');
-const request = require('request');
+const uuidv1 = require("uuid/v1");
+const request = require("request");
 
-const apiai = require('apiai');
+const apiai = require("apiai");
 
 const apiaiApp = apiai(process.env.APIAI_ACCESS_TOKEN);
 
@@ -14,55 +14,53 @@ const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 function handleMessage(sender_psid, received_message) {
   // Check if the message contains text
   if (received_message.text) {
-
     var request = apiaiApp.textRequest(received_message.text, {
       sessionId: uuidv1()
     });
 
-    request.on('response', function (response) {
-      console.log('response', response.result.fulfillment.speech);
-      callSendAPI(sender_psid, response.result.fulfillment.speech);
+    request.on("response", function(response) {
+      callSendAPI(sender_psid, {
+        text: response.result.fulfillment.speech
+      });
     });
 
-    request.on('error', function (error) {
-      
+    request.on("error", function(error) {
+      console.log("error", error);
     });
 
     request.end();
   }
-
 }
 
 // Handles messaging_postbacks events
-function handlePostback(sender_psid, received_postback) {
-
-}
+function handlePostback(sender_psid, received_postback) {}
 
 // Sends response messages via the Send API
 function callSendAPI(sender_psid, response) {
   // Construct the message body
   let request_body = {
-    "recipient": {
-      "id": sender_psid
+    recipient: {
+      id: sender_psid
     },
-    "message": response
-  }
+    message: response
+  };
 
   // Send the HTTP request to the Messenger Platform
-  request({
-    "uri": "https://graph.facebook.com/v2.6/me/messages",
-    "qs": {
-      "access_token": PAGE_ACCESS_TOKEN
+  request(
+    {
+      uri: "https://graph.facebook.com/v2.6/me/messages",
+      qs: {
+        access_token: PAGE_ACCESS_TOKEN
+      },
+      method: "POST",
+      json: request_body
     },
-    "method": "POST",
-    "json": request_body
-  }, (err, res, body) => {
-    if (!err) {
-      
-    } else {
-      
+    (err, res, body) => {
+      if (!err) {
+      } else {
+      }
     }
-  });
+  );
 }
 
 // Creates the endpoint for our webhook
@@ -71,11 +69,9 @@ app.post("/webhook", (req, res) => {
   let body = req.body;
 
   // Check the webhook event is from a Page subscription
-  if (body.object === 'page') {
-
+  if (body.object === "page") {
     // Iterate over each entry - there may be multiple if batched
-    body.entry.forEach(function (entry) {
-
+    body.entry.forEach(function(entry) {
       // Gets the body of the webhook event
       let webhook_event = entry.messaging[0];
 
@@ -89,12 +85,10 @@ app.post("/webhook", (req, res) => {
       } else if (webhook_event.postback) {
         handlePostback(sender_psid, webhook_event.postback);
       }
-
     });
 
     // Return a '200 OK' response to all events
-    res.status(200).send('EVENT_RECEIVED');
-
+    res.status(200).send("EVENT_RECEIVED");
   } else {
     // Return a '404 Not Found' if event is not from a page subscription
     res.sendStatus(404);
