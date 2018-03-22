@@ -35,7 +35,7 @@ const GOOGLE_MAP_IMAGE = {
         "title": 'Location Shared By Bot',
         "subtitle": "Location Subtitle",
         "image_url": "https://maps.googleapis.com/maps/api/staticmap?key=" + "YOUR_GMAPS_TOKEN" +
-          "&markers=color:red|label:B|" + lat + "," + long + "&size=360x360&zoom=13"
+          "&markers=color:red|label:B|" + 30.4803952 + "," + 114.4054483 + "&size=360x360&zoom=13"
       }]
     }
   }
