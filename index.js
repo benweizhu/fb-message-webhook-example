@@ -73,7 +73,7 @@ function callSendAPI(sender_psid, response) {
     recipient: {
       id: sender_psid
     },
-    message: APPLE_MAP
+    message: GOOGLE_MAP_IMAGE
   };
 
   // Send the HTTP request to the Messenger Platform
