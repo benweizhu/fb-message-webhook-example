@@ -9,6 +9,7 @@ const apiai = require("apiai");
 const apiaiApp = apiai(process.env.APIAI_ACCESS_TOKEN);
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
+const GOOGLE_MAP_API_KEY = process.env.GOOGLE_MAP_API_KEY;
 
 const APPLE_MAP = {
   "attachment": {
@@ -18,7 +19,7 @@ const APPLE_MAP = {
       "elements": {
         "element": {
           "title": "Your current location",
-          "image_url": "https://maps.googleapis.com/maps/api/staticmap?size=764x400&center=" + 30.4803952 + "," + 114.4054483 + "&zoom=25&markers=" + 30.4803952 + "," + 114.4054483,
+          "image_url": "https://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=600x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318&markers=color:red%7Clabel:C%7C40.718217,-73.998284&key=" + GOOGLE_MAP_API_KEY,
           "item_url": "http://maps.apple.com/maps?q=" + 30.4803952 + "," + 114.4054483 + "&z=16"
         }
       }
@@ -34,8 +35,7 @@ const GOOGLE_MAP_IMAGE = {
       "elements": [{
         "title": 'Location Shared By Bot',
         "subtitle": "Location Subtitle",
-        "image_url": "https://maps.googleapis.com/maps/api/staticmap?key=" + "YOUR_GMAPS_TOKEN" +
-          "&markers=color:red|label:B|" + 30.4803952 + "," + 114.4054483 + "&size=360x360&zoom=13"
+        "image_url": "https://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=600x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318&markers=color:red%7Clabel:C%7C40.718217,-73.998284&key=" + GOOGLE_MAP_API_KEY
       }]
     }
   }
@@ -73,7 +73,7 @@ function callSendAPI(sender_psid, response) {
     recipient: {
       id: sender_psid
     },
-    message: GOOGLE_MAP_IMAGE
+    message: APPLE_MAP
   };
 
   // Send the HTTP request to the Messenger Platform
