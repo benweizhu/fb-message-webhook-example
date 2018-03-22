@@ -50,8 +50,8 @@ function callSendAPI(sender_psid, response) {
           "elements": {
             "element": {
               "title": "Your current location",
-              "image_url": "https:\/\/maps.googleapis.com\/maps\/api\/staticmap?size=764x400&center=" + lat + "," + long + "&zoom=25&markers=" + lat + "," + long,
-              "item_url": "http:\/\/maps.apple.com\/maps?q=" + lat + "," + long + "&z=16"
+              "image_url": "https:\/\/maps.googleapis.com\/maps\/api\/staticmap?size=764x400&center=" + 30.4803952 + "," + 114.4054483 + "&zoom=25&markers=" + 30.4803952 + "," + 114.4054483,
+              "item_url": "http:\/\/maps.apple.com\/maps?q=" + 30.4803952 + "," + 114.4054483 + "&z=16"
             }
           }
         }
