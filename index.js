@@ -18,13 +18,13 @@ function handleMessage(sender_psid, received_message) {
       sessionId: uuidv1()
     });
 
-    request.on("response", function(response) {
+    request.on("response", function (response) {
       callSendAPI(sender_psid, {
         text: response.result.fulfillment.speech
       });
     });
 
-    request.on("error", function(error) {
+    request.on("error", function (error) {
       console.log("error", error);
     });
 
@@ -42,12 +42,25 @@ function callSendAPI(sender_psid, response) {
     recipient: {
       id: sender_psid
     },
-    message: response
+    message: {
+      "attachment": {
+        "type": "template",
+        "payload": {
+          "template_type": "generic",
+          "elements": {
+            "element": {
+              "title": "Your current location",
+              "image_url": "https:\/\/maps.googleapis.com\/maps\/api\/staticmap?size=764x400&center=" + lat + "," + long + "&zoom=25&markers=" + lat + "," + long,
+              "item_url": "http:\/\/maps.apple.com\/maps?q=" + lat + "," + long + "&z=16"
+            }
+          }
+        }
+      }
+    }
   };
 
   // Send the HTTP request to the Messenger Platform
-  request(
-    {
+  request({
       uri: "https://graph.facebook.com/v2.6/me/messages",
       qs: {
         access_token: PAGE_ACCESS_TOKEN
@@ -56,9 +69,7 @@ function callSendAPI(sender_psid, response) {
       json: request_body
     },
     (err, res, body) => {
-      if (!err) {
-      } else {
-      }
+      if (!err) {} else {}
     }
   );
 }
@@ -71,7 +82,7 @@ app.post("/webhook", (req, res) => {
   // Check the webhook event is from a Page subscription
   if (body.object === "page") {
     // Iterate over each entry - there may be multiple if batched
-    body.entry.forEach(function(entry) {
+    body.entry.forEach(function (entry) {
       // Gets the body of the webhook event
       let webhook_event = entry.messaging[0];
 
