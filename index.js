@@ -10,6 +10,37 @@ const apiaiApp = apiai(process.env.APIAI_ACCESS_TOKEN);
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
+const APPLE_MAP = {
+  "attachment": {
+    "type": "template",
+    "payload": {
+      "template_type": "generic",
+      "elements": {
+        "element": {
+          "title": "Your current location",
+          "image_url": "https://maps.googleapis.com/maps/api/staticmap?size=764x400&center=" + 30.4803952 + "," + 114.4054483 + "&zoom=25&markers=" + 30.4803952 + "," + 114.4054483,
+          "item_url": "http://maps.apple.com/maps?q=" + 30.4803952 + "," + 114.4054483 + "&z=16"
+        }
+      }
+    }
+  }
+};
+
+const GOOGLE_MAP_IMAGE = {
+  "attachment": {
+    "type": "template",
+    "payload": {
+      "template_type": "generic",
+      "elements": [{
+        "title": 'Location Shared By Bot',
+        "subtitle": "Location Subtitle",
+        "image_url": "https://maps.googleapis.com/maps/api/staticmap?key=" + "YOUR_GMAPS_TOKEN" +
+          "&markers=color:red|label:B|" + lat + "," + long + "&size=360x360&zoom=13"
+      }]
+    }
+  }
+};
+
 // Handles messages events
 function handleMessage(sender_psid, received_message) {
   // Check if the message contains text
@@ -42,21 +73,7 @@ function callSendAPI(sender_psid, response) {
     recipient: {
       id: sender_psid
     },
-    message: {
-      "attachment": {
-        "type": "template",
-        "payload": {
-          "template_type": "generic",
-          "elements": {
-            "element": {
-              "title": "Your current location",
-              "image_url": "https:\/\/maps.googleapis.com\/maps\/api\/staticmap?size=764x400&center=" + 30.4803952 + "," + 114.4054483 + "&zoom=25&markers=" + 30.4803952 + "," + 114.4054483,
-              "item_url": "http:\/\/maps.apple.com\/maps?q=" + 30.4803952 + "," + 114.4054483 + "&z=16"
-            }
-          }
-        }
-      }
-    }
+    message: APPLE_MAP
   };
 
   // Send the HTTP request to the Messenger Platform
