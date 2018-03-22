@@ -20,7 +20,7 @@ const APPLE_MAP = {
         "element": {
           "title": "Your current location",
           "image_url": "https://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=600x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318&markers=color:red%7Clabel:C%7C40.718217,-73.998284&key=" + GOOGLE_MAP_API_KEY,
-          "item_url": "http://maps.google.com/maps/@30.4803952,114.4054483,14z?hl=en"
+          "item_url": "http://www.google.com/maps/@30.4803952,114.4054483,14z?hl=en"
         }
       }
     }
