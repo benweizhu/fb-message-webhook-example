@@ -41,6 +41,16 @@ const GOOGLE_MAP_IMAGE = {
   }
 };
 
+
+function handleOptin(sender_psid, received_message) {
+  // Check if the message contains text
+  if (received_message) {
+    callSendAPI(sender_psid, {
+      text: received_message
+    });
+  }
+}
+
 // Handles messages events
 function handleMessage(sender_psid, received_message) {
   // Check if the message contains text
@@ -73,7 +83,7 @@ function callSendAPI(sender_psid, response) {
     recipient: {
       id: sender_psid
     },
-    message: APPLE_MAP
+    message: response
   };
 
   // Send the HTTP request to the Messenger Platform
@@ -114,6 +124,8 @@ app.post("/webhook", (req, res) => {
         handleMessage(sender_psid, webhook_event.message);
       } else if (webhook_event.postback) {
         handlePostback(sender_psid, webhook_event.postback);
+      } else if (webhook_event.optin) {
+        handleOptin(sender_psid, 'Hi, I just heard from you in ' + webhook_event.optin.ref);
       }
     });
 
