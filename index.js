@@ -96,8 +96,7 @@ function callSendAPI(sender_psid, response) {
               type: "web_url",
               url: "https://petersfancybrownhats.com/view?item=103",
               messenger_extensions: false,
-              webview_height_ratio: "tall",
-              fallback_url: "https://petersfancybrownhats.com/"
+              webview_height_ratio: "tall"
             },
             buttons: [{
                 type: "web_url",
