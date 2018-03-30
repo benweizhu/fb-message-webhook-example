@@ -97,8 +97,7 @@ function callSendAPI(sender_psid, response) {
               url: "https://petersfancybrownhats.com/view?item=103",
               messenger_extensions: false,
               webview_height_ratio: "tall"
-            },
-            buttons: []
+            }
           }]
         }
       }
