@@ -126,6 +126,7 @@ function callSendAPI(sender_psid, response) {
       json: request_body
     },
     (err, res, body) => {
+      console.log(err, res, body)
       if (!err) {} else {}
     }
   );
