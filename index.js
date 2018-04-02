@@ -8,6 +8,8 @@ const apiai = require("apiai");
 
 const apiaiApp = apiai(process.env.APIAI_ACCESS_TOKEN);
 
+const MapAndQuestionService = require('./MapAndQuestionService');
+
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const GOOGLE_MAP_API_KEY = process.env.GOOGLE_MAP_API_KEY;
 
@@ -60,9 +62,10 @@ function handleMessage(sender_psid, received_message) {
     });
 
     request.on("response", function (response) {
-      callSendAPI(sender_psid, {
-        text: response.result.fulfillment.speech
-      });
+      // callSendAPI(sender_psid, {
+      //   text: response.result.fulfillment.speech
+      // });
+      MapAndQuestionService.callSendAPI(sender_psid)
     });
 
     request.on("error", function (error) {
