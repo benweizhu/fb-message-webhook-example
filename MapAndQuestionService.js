@@ -1,5 +1,8 @@
 const request = require("request");
 
+const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
+const GOOGLE_MAP_API_KEY = process.env.GOOGLE_MAP_API_KEY;
+
 const GOOGLE_MAP_IMAGE = {
   attachment: {
     type: "template",
