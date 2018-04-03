@@ -93,7 +93,7 @@ function callSendAPI(sender_psid, response) {
       id: sender_psid
     },
     message: {
-      text: "Hello, my friend, please return a line, \n hhhh"
+      text: "Hello, my friend, please return a line, \n hhhh \n youoyouou"
     }
   };
 
