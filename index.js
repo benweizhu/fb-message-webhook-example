@@ -101,7 +101,7 @@ function callSendAPI(sender_psid, response) {
             {
               title: "Welcome!",
               image_url: "https://petersfancybrownhats.com/company_image.png",
-              subtitle: "We have the right hat for everyone.",
+              subtitle: "We have the right hat for everyone. We have the right hat for everyone. We have the right hat for everyone. We have the right hat for everyone.",
               default_action: {
                 type: "web_url",
                 url: "https://petersfancybrownhats.com/view?item=103",
