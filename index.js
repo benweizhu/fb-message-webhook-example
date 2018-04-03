@@ -133,16 +133,14 @@ function callSendAPI(sender_psid, response) {
               subtitle: "100% Soft and Luxurious Cotton",
               quantity: 2,
               price: 50,
-              currency: "USD",
-              image_url: "http://petersapparel.parseapp.com/img/whiteshirt.png"
+              currency: "USD"
             },
             {
               title: "Classic Gray T-Shirt",
               subtitle: "100% Soft and Luxurious Cotton",
               quantity: 1,
               price: 25,
-              currency: "USD",
-              image_url: "http://petersapparel.parseapp.com/img/grayshirt.png"
+              currency: "USD"
             }
           ]
         }
