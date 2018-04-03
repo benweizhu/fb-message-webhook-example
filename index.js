@@ -8,21 +8,24 @@ const apiai = require("apiai");
 
 const apiaiApp = apiai(process.env.APIAI_ACCESS_TOKEN);
 
-const MapAndQuestionService = require('./MapAndQuestionService');
+const MapAndQuestionService = require("./MapAndQuestionService");
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const GOOGLE_MAP_API_KEY = process.env.GOOGLE_MAP_API_KEY;
 
 const APPLE_MAP = {
-  "attachment": {
-    "type": "template",
-    "payload": {
-      "template_type": "generic",
-      "elements": {
-        "element": {
-          "title": "Your current location",
-          "image_url": "https://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=600x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318&markers=color:red%7Clabel:C%7C40.718217,-73.998284&key=" + GOOGLE_MAP_API_KEY,
-          "item_url": "http://www.google.com/maps/@30.4803952,114.4054483,14z?hl=en"
+  attachment: {
+    type: "template",
+    payload: {
+      template_type: "generic",
+      elements: {
+        element: {
+          title: "Your current location",
+          image_url:
+            "https://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=600x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318&markers=color:red%7Clabel:C%7C40.718217,-73.998284&key=" +
+            GOOGLE_MAP_API_KEY,
+          item_url:
+            "http://www.google.com/maps/@30.4803952,114.4054483,14z?hl=en"
         }
       }
     }
@@ -30,19 +33,22 @@ const APPLE_MAP = {
 };
 
 const GOOGLE_MAP_IMAGE = {
-  "attachment": {
-    "type": "template",
-    "payload": {
-      "template_type": "generic",
-      "elements": [{
-        "title": 'Location Shared By Bot',
-        "subtitle": "Location Subtitle",
-        "image_url": "https://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=600x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318&markers=color:red%7Clabel:C%7C40.718217,-73.998284&key=" + GOOGLE_MAP_API_KEY
-      }]
+  attachment: {
+    type: "template",
+    payload: {
+      template_type: "generic",
+      elements: [
+        {
+          title: "Location Shared By Bot",
+          subtitle: "Location Subtitle",
+          image_url:
+            "https://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=600x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318&markers=color:red%7Clabel:C%7C40.718217,-73.998284&key=" +
+            GOOGLE_MAP_API_KEY
+        }
+      ]
     }
   }
 };
-
 
 function handleOptin(sender_psid, received_message) {
   // Check if the message contains text
@@ -61,14 +67,14 @@ function handleMessage(sender_psid, received_message) {
       sessionId: uuidv1()
     });
 
-    request.on("response", function (response) {
-      // callSendAPI(sender_psid, {
-      //   text: response.result.fulfillment.speech
-      // });
-      MapAndQuestionService.callSendAPI(sender_psid)
+    request.on("response", function(response) {
+      callSendAPI(sender_psid, {
+        text: response.result.fulfillment.speech
+      });
+      // MapAndQuestionService.callSendAPI(sender_psid)
     });
 
-    request.on("error", function (error) {
+    request.on("error", function(error) {
       console.log("error", error);
     });
 
@@ -90,25 +96,63 @@ function callSendAPI(sender_psid, response) {
       attachment: {
         type: "template",
         payload: {
-          template_type: "generic",
-          elements: [{
-            title: "Welcome!",
-            image_url: "https://petersfancybrownhats.com/company_image.png",
-            subtitle: "We have the right hat for everyone.",
-            default_action: {
-              type: "web_url",
-              url: "https://petersfancybrownhats.com/view?item=103",
-              messenger_extensions: false,
-              webview_height_ratio: "tall"
+          template_type: "receipt",
+          recipient_name: "Stephane Crozatier",
+          order_number: "12345678902",
+          currency: "USD",
+          payment_method: "Visa 2345",
+          order_url: "http://petersapparel.parseapp.com/order?order_id=123456",
+          timestamp: "1428444852",
+          address: {
+            street_1: "1 Hacker Way",
+            street_2: "",
+            city: "Menlo Park",
+            postal_code: "94025",
+            state: "CA",
+            country: "US"
+          },
+          summary: {
+            subtotal: 75.0,
+            shipping_cost: 4.95,
+            total_tax: 6.19,
+            total_cost: 56.14
+          },
+          adjustments: [
+            {
+              name: "New Customer Discount",
+              amount: 20
+            },
+            {
+              name: "$10 Off Coupon",
+              amount: 10
             }
-          }]
+          ],
+          elements: [
+            {
+              title: "Classic White T-Shirt",
+              subtitle: "100% Soft and Luxurious Cotton",
+              quantity: 2,
+              price: 50,
+              currency: "USD",
+              image_url: "http://petersapparel.parseapp.com/img/whiteshirt.png"
+            },
+            {
+              title: "Classic Gray T-Shirt",
+              subtitle: "100% Soft and Luxurious Cotton",
+              quantity: 1,
+              price: 25,
+              currency: "USD",
+              image_url: "http://petersapparel.parseapp.com/img/grayshirt.png"
+            }
+          ]
         }
       }
     }
   };
 
   // Send the HTTP request to the Messenger Platform
-  request({
+  request(
+    {
       uri: "https://graph.facebook.com/v2.6/me/messages",
       qs: {
         access_token: PAGE_ACCESS_TOKEN
@@ -117,8 +161,10 @@ function callSendAPI(sender_psid, response) {
       json: request_body
     },
     (err, res, body) => {
-      console.log(err, res, body)
-      if (!err) {} else {}
+      console.log(err, res, body);
+      if (!err) {
+      } else {
+      }
     }
   );
 }
@@ -133,7 +179,7 @@ app.post("/webhook", (req, res) => {
   // Check the webhook event is from a Page subscription
   if (body.object === "page") {
     // Iterate over each entry - there may be multiple if batched
-    body.entry.forEach(function (entry) {
+    body.entry.forEach(function(entry) {
       // Gets the body of the webhook event
       let webhook_event = entry.messaging[0];
 
@@ -149,7 +195,10 @@ app.post("/webhook", (req, res) => {
       } else if (webhook_event.postback) {
         handlePostback(sender_psid, webhook_event.postback);
       } else if (webhook_event.optin) {
-        handleOptin(sender_psid, 'Hi, I just heard from you in ' + webhook_event.optin.ref);
+        handleOptin(
+          sender_psid,
+          "Hi, I just heard from you in " + webhook_event.optin.ref
+        );
       }
     });
 
